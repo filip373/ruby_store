@@ -21,6 +21,7 @@ store.print_basket
 store.print_warehouse
 puts "-"
 
+# adding product to basket
 store.add_to_basket(MultipleProduct.new({product: product1, quantity: 2}))
 puts "-"
 
@@ -28,6 +29,11 @@ store.print_basket
 store.print_warehouse
 puts "-"
 
+# trying to add more products than in warehouse
+store.add_to_basket(MultipleProduct.new({product: product2, quantity: 8}))
+puts "-"
+
+# adding another product to basket
 store.add_to_basket(MultipleProduct.new({product: product2, quantity: 2}))
 puts "-"
 
@@ -35,17 +41,13 @@ store.print_basket
 store.print_warehouse
 puts "-"
 
+# trying to remove more products than in basket
+store.remove_from_basket(MultipleProduct.new({product: product2, quantity: 3}))
+puts "-"
+
+# removing products from basket
 store.remove_from_basket(MultipleProduct.new({product: product1, quantity: 1}))
 puts "-"
 
 store.print_basket
 store.print_warehouse
-puts "-"
-
-
-store.remove_from_basket(MultipleProduct.new({product: product2, quantity: 3}))
-puts "-"
-
-store.print_basket
-store.print_warehouse
-puts "-"

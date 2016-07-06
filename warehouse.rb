@@ -10,11 +10,15 @@ class Warehouse
   end
 
   def remove(multiple_product)
-    unless @products.contains(multiple_product)
-      raise "Cannot remove #{multiple_product}, it is not in warehouse"
+    unless contains(multiple_product)
+      raise "Cannot remove #{multiple_product}, not in warehouse"
     end
     @products.remove(multiple_product)
     puts "#{multiple_product} removed from warehouse"
+  end
+
+  def contains(multiple_product)
+    @products.contains(multiple_product)
   end
 
   def print

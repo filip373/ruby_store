@@ -10,11 +10,15 @@ class Basket
   end
 
   def remove(multiple_product)
-    unless @products.contains(multiple_product)
-      raise "Cannot remove #{multiple_product}, it is not in basket"
+    unless contains(multiple_product)
+      raise "Cannot remove #{multiple_product}, not in basket"
     end
     @products.remove(multiple_product)
     puts "#{multiple_product} removed from basket"
+  end
+
+  def contains(multiple_product)
+    @products.contains(multiple_product)
   end
 
   def print
