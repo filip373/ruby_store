@@ -1,4 +1,4 @@
-require_relative('../lib/product')
+require_relative('../../lib/product')
 
 RSpec.describe Product do
 
@@ -37,14 +37,14 @@ RSpec.describe Product do
     end
   end
 
-  context '#vat' do
-    it 'returns proper vat when 8.66 given' do
-      expect(Product.new({name: nil, price: nil, vat: 8.66}).vat)
-      .to eql(8.66)
+  context '#price_with_vat' do
+    it 'returns valid price with vat when some price and vat given' do
+      expect(Product.new({name: nil, price: 5.34, vat: 8.66}).price_with_vat)
+      .to be_within(0.01).of(5.80)
     end
-    it 'returns proper vat when 34.12 given' do
-      expect(Product.new({name: nil, price: nil, vat: 34.12}).vat)
-      .to eql(34.12)
+    it 'returns valid price with vat when some other price and vat given' do
+      expect(Product.new({name: nil, price: 7.23, vat: 34.12}).price_with_vat)
+      .to be_within(0.01).of(9.70)
     end
   end
 end

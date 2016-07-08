@@ -4,29 +4,28 @@ class Warehouse
     @products = products
   end
 
-  def add(multiple_product)
-    @products.add(multiple_product)
-    puts "#{multiple_product} added to warehouse"
+  def add(product)
+    @products.add(product)
   end
 
-  def remove(multiple_product)
-    unless contains(multiple_product)
-      raise "Cannot remove #{multiple_product}, not in warehouse"
+  def remove(product)
+    raise "Cannot remove #{product}, not in warehouse" unless contains?(product)
+    @products.remove(product)
+  end
+
+  def contains?(product)
+    @products.all.any? { |p| p.id == product.id }
+  end
+
+  def state 
+    state = "Products in warehouse:"
+
+    products_quantities = Hash.new(0)
+    @products.all.each { |p| products_quantities[p] += 1 }
+    products_quantities.each do |p,q|
+      state << "\n#{q} #{p.name}(s) left"
     end
-    @products.remove(multiple_product)
-    puts "#{multiple_product} removed from warehouse"
-  end
-
-  def contains(multiple_product)
-    @products.contains(multiple_product)
-  end
-
-  def print
-    puts 'Products in warehouse:'
-
-    @products.list.each do |p|
-      puts "#{p} left"
-    end
+    state
   end
 
 end
