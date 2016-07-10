@@ -1,47 +1,27 @@
 class Basket
 
-  def initialize(products)
-    @products = products
+  def initialize()
+    @products = []
   end
 
   def add(product)
-    @products.add(product)
+    @products << product
   end
 
-  def remove(product)
-    raise "Cannot remove #{product}, not in basket" unless contains?(product)
-    @products.remove(product)
+  def remove(product_id)
+    unless contains?(product_id) then
+      raise "Cannot remove product of id: #{product_id}, not in basket"
+    end
+    @products.delete_at(@products.index { |p| p.id == product_id })
   end
 
-  def contains?(product)
-    @products.all.any? { |p| p.id == product.id }
+  def contains?(product_id)
+    @products.any? { |p| p.id == product_id }
   end
 
-  def state
-    state = 'Products in basket:'
-    
+  def products
     products_quantities = Hash.new(0)
-    @products.all.each { |p| products_quantities[p] += 1 }
-    products_quantities.each do |p,q|
-      state << "\n#{q} #{p.name}(s) x #{format_money(p.price)} = "\
-       "#{p.price * q}"
-    end
-
-    state << "\n#{format_money(total)} in total"
-    state << "\n#{format_money(total_with_vat)} with vat"
+    @products.each { |p| products_quantities[p] += 1 }
+    products_quantities
   end
-
-  private
-
-    def total
-      @products.all.reduce(0) { |sum,p| sum += p.price }
-    end
-
-    def total_with_vat
-      @products.all.reduce(0) { |sum,p| sum += p.price_with_vat }
-    end
-
-    def format_money(price)
-      '%.2f' % price
-    end
 end

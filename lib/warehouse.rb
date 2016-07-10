@@ -5,27 +5,23 @@ class Warehouse
   end
 
   def add(product)
-    @products.add(product)
+    @products << product
   end
 
-  def remove(product)
-    raise "Cannot remove #{product}, not in warehouse" unless contains?(product)
-    @products.remove(product)
-  end
-
-  def contains?(product)
-    @products.all.any? { |p| p.id == product.id }
-  end
-
-  def state 
-    state = "Products in warehouse:"
-
-    products_quantities = Hash.new(0)
-    @products.all.each { |p| products_quantities[p] += 1 }
-    products_quantities.each do |p,q|
-      state << "\n#{q} #{p.name}(s) left"
+  def remove(product_id)
+    unless contains?(product_id) then
+      raise "Cannot remove product of id: #{product_id}, not in warehouse"
     end
-    state
+    @products.delete_at(@products.index { |p| p.id == product_id })
   end
 
+  def contains?(product_id)
+    @products.any? { |p| p.id == product_id }
+  end
+
+  def products
+    products_quantities = Hash.new(0)
+    @products.each { |p| products_quantities[p] += 1 }
+    products_quantities
+  end
 end

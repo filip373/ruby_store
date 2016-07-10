@@ -10,12 +10,11 @@ class Product
   end
 
   def price_with_vat
-    @price + @price * @vat / 100
+    price + price * @vat / 100
   end
 
   private
     def next_id
       @@id += 1
     end
-
 end

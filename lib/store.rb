@@ -6,30 +6,28 @@ class Store
   end
 
   def add_to_basket(product)
-    if @warehouse.contains?(product)
-      @warehouse.remove(product)
-      @basket.add(product)
-      true
-    else
-      false
-    end
+    @warehouse.remove(product.id)
+    @basket.add(product)
   end
 
   def remove_from_basket(product)
-    if @basket.contains?(product)
-      @basket.remove(product)
-      @warehouse.add(product)
-      true
-    else
-      false
-    end
+    @basket.remove(product.id)
+    @warehouse.add(product)
+  end
+
+  def can_add?(product_id)
+    @warehouse.contains?(product_id)
+  end
+
+  def can_remove?(product_id)
+    @basket.contains?(product_id)
   end
 
   def basket_state 
-    @basket.state
+    @basket.products
   end
 
   def warehouse_state
-    @warehouse.state
+    @warehouse.products
   end
 end
