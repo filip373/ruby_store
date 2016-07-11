@@ -5,14 +5,14 @@ class Store
     @warehouse = warehouse
   end
 
-  def add_to_basket(product)
-    @warehouse.remove(product.id)
-    @basket.add(product)
+  def add_to_basket(product_id)
+    @warehouse.remove(product_id)
+    @basket.add(product_id)
   end
 
-  def remove_from_basket(product)
-    @basket.remove(product.id)
-    @warehouse.add(product)
+  def remove_from_basket(product_id)
+    @basket.remove(product_id)
+    @warehouse.add(product_id)
   end
 
   def can_add?(product_id)
@@ -23,7 +23,7 @@ class Store
     @basket.contains?(product_id)
   end
 
-  def basket_state 
+  def basket_state
     @basket.products
   end
 
