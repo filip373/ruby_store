@@ -5,29 +5,29 @@ class Store
     @warehouse = warehouse
   end
 
-  def add_to_basket(multiple_product)
-    if @warehouse.contains(multiple_product)
-      @warehouse.remove(multiple_product)
-      @basket.add(multiple_product)
-    else
-      puts "Cannot remove #{multiple_product}, not in warehouse"
-    end
+  def add_to_basket(product)
+    @warehouse.remove(product.id)
+    @basket.add(product)
   end
 
-  def remove_from_basket(multiple_product)
-    if @basket.contains(multiple_product)
-      @basket.remove(multiple_product)
-      @warehouse.add(multiple_product)
-    else
-      puts "Cannot remove #{multiple_product}, not in basket"
-    end
+  def remove_from_basket(product)
+    @basket.remove(product.id)
+    @warehouse.add(product)
   end
 
-  def print_basket
-    @basket.print
+  def can_add?(product_id)
+    @warehouse.contains?(product_id)
   end
 
-  def print_warehouse
-    @warehouse.print
+  def can_remove?(product_id)
+    @basket.contains?(product_id)
+  end
+
+  def basket_state 
+    @basket.products
+  end
+
+  def warehouse_state
+    @warehouse.products
   end
 end

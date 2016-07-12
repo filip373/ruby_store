@@ -1,53 +1,58 @@
-require_relative('./product')
-require_relative('./multiple_product')
-require_relative('./products')
-require_relative('./basket')
-require_relative('./warehouse')
-require_relative('./store')
+require_relative('../lib/product')
+require_relative('../lib/basket')
+require_relative('../lib/warehouse')
+require_relative('../lib/store')
+require_relative('../lib/printed_store')
 
-product1 = Product.new({name: 'Ball', price: 23.55, vat: 21.0})
-product2 = Product.new({name: 'Book', price: 8.19, vat: 8.0})
-product3 = Product.new({name: 'Chair', price: 65.84, vat: 30.0})
+product1 = Product.new(name: 'Ball', price: 23.55, vat: 21.0)
+product2 = Product.new(name: 'Book', price: 8.19, vat: 8.0)
+product3 = Product.new(name: 'Chair', price: 65.84, vat: 30.0)
 
-store = Store.new({
-  basket: Basket.new(Products.new([])),
-  warehouse: Warehouse.new(Products.new([
-    MultipleProduct.new({product: product1, quantity: 5}),
-    MultipleProduct.new({product: product2, quantity: 2}),
-    MultipleProduct.new({product: product3, quantity: 0})]))
-  })
+@store = Store.new(
+  basket: Basket.new,
+  warehouse: Warehouse.new([
+    product1, product1, product1, product1, product1, product2, product2])
+)
 
-store.print_basket
-store.print_warehouse
-puts "-"
+@printed_store = PrintedStore.new(@store)
+
+def add_to_basket(product)
+  return "Cannot add #{product.name} to basket, it is not in warehouse" unless @store.can_add?(product.id)
+  @store.add_to_basket(product)
+  "Added #{product.name} to basket"
+end
+
+def remove_from_basket(product)
+  return "Cannot remove #{product.name} from basket, it is not in basket" unless @store.can_remove?(product.id)
+  @store.remove_from_basket(product)
+  "Removed #{product.name} from basket"
+end
+
+puts @printed_store.basket
+puts @printed_store.warehouse
 
 # adding product to basket
-store.add_to_basket(MultipleProduct.new({product: product1, quantity: 2}))
-puts "-"
+puts add_to_basket(product1)
 
-store.print_basket
-store.print_warehouse
-puts "-"
+puts @printed_store.basket
+puts @printed_store.warehouse
 
-# trying to add more products than in warehouse
-store.add_to_basket(MultipleProduct.new({product: product2, quantity: 8}))
-puts "-"
+puts "Trying to add product which is not in warehouse:"
+puts add_to_basket(product3)
 
-# adding another product to basket
-store.add_to_basket(MultipleProduct.new({product: product2, quantity: 2}))
-puts "-"
+# adding another products to basket
+puts add_to_basket(product1)
+puts add_to_basket(product2)
+puts add_to_basket(product2)
 
-store.print_basket
-store.print_warehouse
-puts "-"
+puts @printed_store.basket
+puts @printed_store.warehouse
 
-# trying to remove more products than in basket
-store.remove_from_basket(MultipleProduct.new({product: product2, quantity: 3}))
-puts "-"
+puts "Trying to remove product which is not in basket:"
+puts remove_from_basket(product3)
 
-# removing products from basket
-store.remove_from_basket(MultipleProduct.new({product: product1, quantity: 1}))
-puts "-"
+# removing product from basket
+puts remove_from_basket(product2)
 
-store.print_basket
-store.print_warehouse
+puts @printed_store.basket
+puts @printed_store.warehouse

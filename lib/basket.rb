@@ -1,51 +1,27 @@
 class Basket
 
-  def initialize(products)
-    @products = products
+  def initialize()
+    @products = []
   end
 
-  def add(multiple_product)
-    @products.add(multiple_product)
-    puts "#{multiple_product} added to basket"
+  def add(product)
+    @products << product
   end
 
-  def remove(multiple_product)
-    unless contains(multiple_product)
-      raise "Cannot remove #{multiple_product}, not in basket"
+  def remove(product_id)
+    unless contains?(product_id) then
+      raise "Cannot remove product of id: #{product_id}, not in basket"
     end
-    @products.remove(multiple_product)
-    puts "#{multiple_product} removed from basket"
+    @products.delete_at(@products.index { |p| p.id == product_id })
   end
 
-  def contains(multiple_product)
-    @products.contains(multiple_product)
+  def contains?(product_id)
+    @products.any? { |p| p.id == product_id }
   end
 
-  def print
-    puts 'Products in basket:'
-
-    @products.list.each do |p|
-      if p.quantity > 0
-        puts "#{p}, #{p.quantity} x #{p.single_price} = "\
-          "#{format_money(p.total)}"
-      end
-    end
-
-    puts "#{format_money(total)} in total"
-    puts "#{format_money(total_with_vat)} with vat"
+  def products
+    products_quantities = Hash.new(0)
+    @products.each { |p| products_quantities[p] += 1 }
+    products_quantities
   end
-
-  private
-
-    def total
-      @products.list.reduce(0) { |sum, p| sum += p.total }
-    end
-
-    def total_with_vat
-      @products.list.reduce(0) { |sum, p| sum += p.total_with_vat }
-    end
-
-    def format_money(price)
-      sprintf('%.2f', price)
-    end
 end
