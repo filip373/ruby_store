@@ -1,4 +1,4 @@
 <p><%= product.name %></p>
-<p>Price: <%= product.price %></p>
-<p>With VAT: <%= product.price_with_vat %></p>
+<p>Price: <%= product.price.to_s.insert(-3, '.') %></p>
+<p>With VAT: <%= product.price_with_vat.to_s.insert(-3, '.') %></p>
 

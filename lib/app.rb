@@ -12,9 +12,9 @@ class App < Sinatra::Base
   def initialize(app = nil)
     super(app)
     products = [
-      Product.new(name: 'Book', price: 12.44, vat: 8.33),
-      Product.new(name: 'Chair', price: 43.22, vat: 12.55),
-      Product.new(name: 'Ball', price: 5.22, vat: 9.50)
+      Product.new(name: 'Book', price: 1244, vat: 833),
+      Product.new(name: 'Chair', price: 4322, vat: 1255),
+      Product.new(name: 'Ball', price: 522, vat: 950)
     ]
     @products_service = ProductsService.new(products)
     @store_service = StoreService.new(
