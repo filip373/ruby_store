@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Your basket - Ruby Store</title>
-  </head>
-  <body>
-    <% if products.empty? %>
-      <h1>Your basket is empty</h1>
-    <% else %>
-      <h1>Products in basket:</h1>
-      <ul>
-        <% products.each do |product, quantity| %>
-          <li>
-            <span><%= quantity %> x </span>
-            <a href="/product/<%= product.id %>"><%= product.name %></a>
-            <a href="/remove/<%= product.id %>"> Remove from basket</a>
-          </li>
-        <% end %>
-      </ul>
+<% if products.empty? %>
+  <h1>Your basket is empty</h1>
+<% else %>
+  <h1>Products in basket:</h1>
+  <ul>
+    <% products.each do |product, quantity| %>
+      <li>
+        <span><%= quantity %> x </span>
+        <a href="/product/<%= product.id %>"><%= product.name %></a>
+        <a href="/remove/<%= product.id %>"> Remove</a>
+      </li>
     <% end %>
-  </body>
-</html>
+  </ul>
+<% end %>
 

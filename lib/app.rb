@@ -24,17 +24,17 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    erb :index
+    erb :index, locals: {title: 'Home'}
   end
 
   get '/offer' do
     products = @store.warehouse_state.map { |p,q| [@products.fetch(p), q] }
-    erb :offer, locals: {products: products}
+    erb :offer, locals: {title: 'Offer', products: products}
   end
 
   get '/basket' do
     products = @store.basket_state.map { |p,q| [@products.fetch(p), q] }
-    erb :basket, locals: {products: products}
+    erb :basket, locals: {title: 'Basket', products: products}
   end
 
   get '/add/:id' do
@@ -48,7 +48,8 @@ class App < Sinatra::Base
   end
 
   get '/product/:id' do
-    erb :product, locals: {product: @products.fetch(params[:id].to_i)}
+    product = @products.fetch(params[:id].to_i)
+    erb :product, locals: {title: product.name, product: product}
   end
 end
 
