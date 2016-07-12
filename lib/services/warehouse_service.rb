@@ -1,7 +1,5 @@
 class WarehouseService
 
-  attr_reader :products
-
   def initialize(warehouse_products)
     @products = warehouse_products
   end
@@ -19,6 +17,10 @@ class WarehouseService
 
   def contains?(product_id)
     @products.any? { |p| p.product_id == product_id && p.quantity > 0 }
+  end
+
+  def products
+    @products.select { |p| p.quantity > 0 }
   end
 
   private

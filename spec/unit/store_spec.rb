@@ -10,11 +10,20 @@ RSpec.describe StoreService do
   product2 = Product.new(name: 'Book', price: 9.34, vat: 9.5)
   product3 = Product.new(name: 'Chair', price: 12.55, vat: 21.4)
 
-  subject do
-    StoreService.new(warehouse_service: WarehouseService.new([
+  let(:warehouse_service) do
+    WarehouseService.new([
       WarehouseProduct.new(product_id: product1.id, quantity: 2),
       WarehouseProduct.new(product_id: product2.id, quantity: 0)
-    ]), basket_service: BasketService.new)
+    ])
+  end
+
+  let(:basket_service) do
+    BasketService.new
+  end
+
+  subject do
+    StoreService.new(warehouse_service: warehouse_service,
+                     basket_service: basket_service)
   end
 
   describe '#can_add?' do
@@ -59,11 +68,11 @@ RSpec.describe StoreService do
       end
       it 'adds product to basket' do
         subject.add_to_basket(product1.id)
-        expect(subject.basket_state).to eql(product1.id => 1)
+        expect(basket_service.products).to eql(product1.id => 1)
       end
       it 'removes product from warehouse' do
         subject.add_to_basket(product1.id)
-        state = subject.warehouse_state
+        state = warehouse_service.products
         expect(state.length).to eql(1)
         expect(state[0].product_id).to eql(product1.id)
         expect(state[0].quantity).to eql(1)
@@ -91,11 +100,11 @@ RSpec.describe StoreService do
       end
       it 'removes product from basket' do
         subject.remove_from_basket(product1.id)
-        expect(subject.basket_state).to be_empty
+        expect(basket_service.products).to be_empty
       end
       it 'adds product to warehouse' do
         subject.remove_from_basket(product1.id)
-        state = subject.warehouse_state
+        state = warehouse_service.products
         expect(state.length).to eql(1)
         expect(state[0].product_id).to eql(product1.id)
         expect(state[0].quantity).to eql(2)
@@ -112,7 +121,7 @@ RSpec.describe StoreService do
   describe '#basket_state' do
     context 'when basket is empty' do
       it 'does not return any product' do
-        expect(subject.basket_state).to be_empty
+        expect(basket_service.products).to be_empty
       end
     end
 
@@ -122,7 +131,7 @@ RSpec.describe StoreService do
         subject.add_to_basket(product1.id)
       end
       it 'returns containing products' do
-        state = subject.basket_state
+        state = basket_service.products
         expect(state.length).to eql(1)
         expect(state).to include(product1.id => 2)
       end
@@ -136,13 +145,13 @@ RSpec.describe StoreService do
         subject.add_to_basket(product1.id)
       end
       it 'does not return any product' do
-        expect(subject.warehouse_state).to be_empty
+        expect(warehouse_service.products).to be_empty
       end
     end
 
     context 'when warehouse contains products' do
       it 'returns containing products' do
-        state = subject.warehouse_state
+        state = warehouse_service.products
         expect(state.length).to eql(1)
         expect(state[0].product_id).to eql(product1.id)
         expect(state[0].quantity).to eql(2)

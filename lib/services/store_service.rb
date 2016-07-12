@@ -22,12 +22,4 @@ class StoreService
   def can_remove?(product_id)
     @basket_service.contains?(product_id)
   end
-
-  def basket_state
-    @basket_service.products
-  end
-
-  def warehouse_state
-    @warehouse_service.products.select { |wp| wp.quantity > 0 }
-  end
 end

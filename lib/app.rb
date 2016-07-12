@@ -17,13 +17,16 @@ class App < Sinatra::Base
       Product.new(name: 'Ball', price: 522, vat: 950)
     ]
     @products_service = ProductsService.new(products)
+    @warehouse_service = WarehouseService.new([
+      WarehouseProduct.new(product_id: products[0].id, quantity: 3),
+      WarehouseProduct.new(product_id: products[1].id, quantity: 4),
+      WarehouseProduct.new(product_id: products[2].id, quantity: 2)
+    ])
+    @basket_service = BasketService.new
     @store_service = StoreService.new(
-      basket_service: BasketService.new,
-      warehouse_service: WarehouseService.new([
-        WarehouseProduct.new(product_id: products[0].id, quantity: 3),
-        WarehouseProduct.new(product_id: products[1].id, quantity: 4),
-        WarehouseProduct.new(product_id: products[2].id, quantity: 2)
-    ]))
+      basket_service: @basket_service,
+      warehouse_service: @warehouse_service
+    )
   end
 
   configure :development do
@@ -35,15 +38,17 @@ class App < Sinatra::Base
   end
 
   get '/offer' do
-    products = @store_service.warehouse_state.map do |wp|
+    products = @warehouse_service.products.map do |wp|
       [@products_service.fetch(wp.product_id), wp.quantity]
     end
     erb :offer, locals: {title: 'Offer', products: products}
   end
 
   get '/basket' do
-    products = @store_service.basket_state.map { |p,q| [@products_service.fetch(p), q] }
-    erb :basket, locals: {title: 'Basket', products: products}
+    products = @basket_service.products.map { |p,q| [@products_service.fetch(p), q] }
+    erb :basket, locals: {title: 'Basket', products: products,
+      total: @products_service.total(products),
+      total_with_vat: @products_service.total_with_vat(products)}
   end
 
   get '/add/:id' do
