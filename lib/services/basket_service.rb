@@ -1,7 +1,7 @@
-class Warehouse
+class BasketService
 
-  def initialize(products)
-    @products = products
+  def initialize()
+    @products = []
   end
 
   def add(product_id)
@@ -10,7 +10,7 @@ class Warehouse
 
   def remove(product_id)
     unless contains?(product_id) then
-      raise "Cannot remove product of id: #{product_id}, not in warehouse"
+      raise "Cannot remove product of id: #{product_id}, not in basket"
     end
     @products.delete_at(@products.index { |p| p == product_id })
   end

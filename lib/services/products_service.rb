@@ -1,4 +1,4 @@
-class Products
+class ProductsService
   def initialize(products)
     @products = products
   end

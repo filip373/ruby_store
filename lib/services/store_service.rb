@@ -1,4 +1,4 @@
-class Store
+class StoreService
 
   def initialize(basket:, warehouse:)
     @basket = basket
@@ -28,6 +28,6 @@ class Store
   end
 
   def warehouse_state
-    @warehouse.products
+    @warehouse.products.select { |wp| wp.quantity > 0 }
   end
 end
