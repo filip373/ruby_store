@@ -159,4 +159,3 @@ RSpec.describe StoreService do
     end
   end
 end
-

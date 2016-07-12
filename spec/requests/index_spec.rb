@@ -6,4 +6,3 @@ RSpec.describe 'GET /', type: :request do
     expect(last_response.status).to eql(200)
   end
 end
-

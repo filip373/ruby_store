@@ -8,7 +8,6 @@ require_relative './services/warehouse_service'
 require_relative './services/products_service'
 
 class App < Sinatra::Base
-
   def initialize(app = nil)
     super(app)
     products = [
@@ -38,14 +37,17 @@ class App < Sinatra::Base
   end
 
   get '/offer' do
-    products = @warehouse_service.products.map do |wp|
-      [@products_service.fetch(wp.product_id), wp.quantity]
+    products = @warehouse_service.products.map do |warehouse_product|
+      [@products_service.fetch(warehouse_product.product_id),
+      warehouse_product.quantity]
     end
     erb :offer, locals: {title: 'Offer', products: products}
   end
 
   get '/basket' do
-    products = @basket_service.products.map { |p,q| [@products_service.fetch(p), q] }
+    products = @basket_service.products.map do |product, quantity|
+      [@products_service.fetch(product), quantity]
+    end
     erb :basket, locals: {title: 'Basket', products: products,
       total: @products_service.total(products),
       total_with_vat: @products_service.total_with_vat(products)}
@@ -66,4 +68,3 @@ class App < Sinatra::Base
     erb :product, locals: {title: product.name, product: product}
   end
 end
-

@@ -14,4 +14,3 @@ class WarehouseProduct
     @quantity -= 1
   end
 end
-
