@@ -18,7 +18,7 @@ class WarehouseService
   end
 
   def contains?(product_id)
-    @products.any? { |p| p.product_id == product_id }
+    @products.any? { |p| p.product_id == product_id && p.quantity > 0 }
   end
 
   private

@@ -11,16 +11,18 @@ class App < Sinatra::Base
 
   def initialize(app = nil)
     super(app)
-    product1 = Product.new(name: 'Book', price: 12.44, vat: 8.33)
-    product2 = Product.new(name: 'Chair', price: 43.22, vat: 12.55)
-    product3 = Product.new(name: 'Ball', price: 5.22, vat: 9.50)
-    @products_service = ProductsService.new([product1, product2, product3])
+    products = [
+      Product.new(name: 'Book', price: 12.44, vat: 8.33),
+      Product.new(name: 'Chair', price: 43.22, vat: 12.55),
+      Product.new(name: 'Ball', price: 5.22, vat: 9.50)
+    ]
+    @products_service = ProductsService.new(products)
     @store_service = StoreService.new(
-      basket: BasketService.new,
-      warehouse: WarehouseService.new([
-        WarehouseProduct.new(product_id: product1.id, quantity: 3),
-        WarehouseProduct.new(product_id: product2.id, quantity: 4),
-        WarehouseProduct.new(product_id: product3.id, quantity: 2)
+      basket_service: BasketService.new,
+      warehouse_service: WarehouseService.new([
+        WarehouseProduct.new(product_id: products[0].id, quantity: 3),
+        WarehouseProduct.new(product_id: products[1].id, quantity: 4),
+        WarehouseProduct.new(product_id: products[2].id, quantity: 2)
     ]))
   end
 
