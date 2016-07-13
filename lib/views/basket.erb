@@ -1,0 +1,17 @@
+<% if products.empty? %>
+  <h1>Your basket is empty</h1>
+<% else %>
+  <h1>Products in basket:</h1>
+  <ul>
+    <% products.each do |product, quantity| %>
+      <li>
+        <span><%= quantity %> x </span>
+        <a href="/product/<%= product.id %>"><%= product.name %></a>
+        <span><%= "(#{quantity} x #{product.price.to_s.insert(-3, '.')})" %></span>
+        <a href="/remove/<%= product.id %>"> Remove</a>
+      </li>
+    <% end %>
+  </ul>
+  <p>Total: <%= total.to_s.insert(-3, '.') %></p>
+  <p>Total with VAT: <%= total_with_vat.to_s.insert(-3, '.') %></p>
+<% end %>

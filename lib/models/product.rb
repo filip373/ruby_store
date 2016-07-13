@@ -10,7 +10,7 @@ class Product
   end
 
   def price_with_vat
-    price + price * @vat / 100
+    (price + price * @vat / 100 / 100).to_i
   end
 
   private

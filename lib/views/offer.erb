@@ -1,0 +1,14 @@
+<% if products.empty? %>
+  <h1>No products currently in offer</h1>
+<% else %>
+  <h1>Products in offer:</h1>
+  <ul>
+    <% products.each do |product, quantity| %>
+      <li>
+        <a href="/product/<%= product.id %>"><%= product.name %></a>
+        <span> (<%= quantity %> left)</span>
+        <a href="/add/<%= product.id %>"> Add to basket</a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

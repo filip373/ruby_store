@@ -1,4 +1,4 @@
-require_relative('../../lib/product')
+require_relative '../../lib/models/product'
 
 RSpec.describe Product do
 
@@ -35,16 +35,16 @@ RSpec.describe Product do
   end
 
   describe '#price' do
-    context 'when 50.34 given' do
-      it 'returns 50.34' do
-        expect(Product.new(name: nil, price: 50.34, vat: nil).price)
-        .to eql(50.34)
+    context 'when 5034 given' do
+      it 'returns 5034' do
+        expect(Product.new(name: nil, price: 5034, vat: nil).price)
+        .to eql(5034)
       end
     end
-    context 'when 8.12 given' do
-      it 'returns 8.12' do
-        expect(Product.new(name: nil, price: 8.12, vat: nil).price)
-        .to eql(8.12)
+    context 'when 812 given' do
+      it 'returns 812' do
+        expect(Product.new(name: nil, price: 812, vat: nil).price)
+        .to eql(812)
       end
     end
   end
@@ -52,16 +52,15 @@ RSpec.describe Product do
   describe '#price_with_vat' do
     context 'when some vat and price given' do
       it 'returns valid price with vat' do
-        expect(Product.new(name: nil, price: 5.34, vat: 8.66).price_with_vat)
-        .to be_within(0.01).of(5.80)
+        expect(Product.new(name: nil, price: 534, vat: 866).price_with_vat)
+        .to eql(580)
       end
     end
     context 'when some other vat and price given' do
       it 'returns valid price with vat' do
-        expect(Product.new(name: nil, price: 7.23, vat: 34.12).price_with_vat)
-        .to be_within(0.01).of(9.70)
+        expect(Product.new(name: nil, price: 723, vat: 3412).price_with_vat)
+        .to eql(969)
       end
     end
   end
 end
-
