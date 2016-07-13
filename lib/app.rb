@@ -45,17 +45,23 @@ class App < Sinatra::Base
   end
 
   get '/add/:id' do
-    @store_service.add_to_basket(params[:id].to_i)
+    id = params[:id].to_i
+    halt 404 unless @store_service.can_add?(id)
+    @store_service.add_to_basket(id)
     redirect '/basket'
   end
 
   get '/remove/:id' do
-    @store_service.remove_from_basket(params[:id].to_i)
+    id = params[:id].to_i
+    halt 404 unless @store_service.can_remove?(id)
+    @store_service.remove_from_basket(id)
     redirect '/basket'
   end
 
   get '/product/:id' do
-    product = @products_service.fetch(params[:id].to_i)
+    id = params[:id].to_i
+    halt 404 unless @products_service.contains?(id)
+    product = @products_service.fetch(id)
     erb :product, locals: {title: product.name, product: product}
   end
 end
