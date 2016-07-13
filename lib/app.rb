@@ -1,7 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/reloader'
-require_relative './models/product'
-require_relative './models/warehouse_product'
+require_relative './db/instance'
 require_relative './services/store_service'
 require_relative './services/basket_service'
 require_relative './services/warehouse_service'
@@ -10,17 +9,9 @@ require_relative './services/products_service'
 class App < Sinatra::Base
   def initialize(app = nil)
     super(app)
-    products = [
-      Product.new(name: 'Book', price: 1244, vat: 833),
-      Product.new(name: 'Chair', price: 4322, vat: 1255),
-      Product.new(name: 'Ball', price: 522, vat: 950)
-    ]
-    @products_service = ProductsService.new(products)
-    @warehouse_service = WarehouseService.new([
-      WarehouseProduct.new(product_id: products[0].id, quantity: 3),
-      WarehouseProduct.new(product_id: products[1].id, quantity: 4),
-      WarehouseProduct.new(product_id: products[2].id, quantity: 2)
-    ])
+    database = Database::Instance.get(settings.environment)
+    @products_service = ProductsService.new(database.products)
+    @warehouse_service = WarehouseService.new(database.warehouse_products)
     @basket_service = BasketService.new
     @store_service = StoreService.new(
       basket_service: @basket_service,

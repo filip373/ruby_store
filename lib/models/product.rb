@@ -2,8 +2,8 @@ class Product
   attr_reader :id, :name, :price
 
   @@id = 0
-  def initialize(name:, price:, vat:)
-    @id = next_id
+  def initialize(id: next_id, name:, price:, vat:)
+    @id = id
     @name = name
     @price = price
     @vat = vat
