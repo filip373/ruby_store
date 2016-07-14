@@ -1,17 +1,27 @@
 <% if products.empty? %>
   <h1>Your basket is empty</h1>
 <% else %>
-  <h1>Products in basket:</h1>
-  <ul>
+  <h1>Products in basket</h1>
+  <ul class="list-group">
     <% products.each do |product, quantity| %>
-      <li>
-        <span><%= quantity %> x </span>
-        <a href="/product/<%= product.id %>"><%= product.name %></a>
-        <span><%= "(#{quantity} x #{product.price.to_s.insert(-3, '.')})" %></span>
-        <a href="/remove/<%= product.id %>"> Remove</a>
+      <li class="list-group-item">
+        <span> <%= quantity %> x </span>
+        <a href="/product/<%= product.id %>">
+          <%= product.name %>
+        </a>
+        <a class="add-link" href="/add/<%= product.id %>">
+          <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          Remove
+        </a>
+        <span class="label label-default product-price">
+          $<%= (quantity * product.price_with_vat).to_s.insert(-3, '.') %></span>
       </li>
     <% end %>
   </ul>
-  <p>Total: <%= total.to_s.insert(-3, '.') %></p>
-  <p>Total with VAT: <%= total_with_vat.to_s.insert(-3, '.') %></p>
+  <p>Total: <span class="label label-default">
+    $ <%= total.to_s.insert(-3, '.') %></span>
+  </p>
+  <p>Total with VAT: <span class="label label-default">
+    $ <%= total_with_vat.to_s.insert(-3, '.') %></span>
+  </p>
 <% end %>
