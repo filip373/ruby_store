@@ -7,6 +7,10 @@ class ProductsService
     @products.find { |product| product.id == product_id }
   end
 
+  def contains?(product_id)
+    @products.any? { |product| product.id == product_id }
+  end
+
   def total(products_quantities)
     products_quantities.reduce(0) do |sum, (product, quantity)|
       sum += product.price * quantity
