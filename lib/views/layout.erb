@@ -2,13 +2,25 @@
 <html>
   <head>
     <title><%= title %> - Ruby Store</title>
+    <link rel="stylesheet" href="/application.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   </head>
   <body>
-    <a href="/">Home</a>
-    <a href="/offer">Offer</a>
-    <a href="/basket">Basket</a>
-    <div>
+    <section class="content">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">Home</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="/offer">Offer</a></li>
+              <li><a href="/basket">Basket</a></li>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
       <%= yield %>
-    </div>
+    </section>
   </body>
 </html>

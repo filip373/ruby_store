@@ -1,0 +1,15 @@
+.content {
+  padding-top: 15px;
+  width: 600px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.add-link {
+  float: right;
+  margin: 0 10px;
+}
+
+.product-price {
+  float: right;
+}
