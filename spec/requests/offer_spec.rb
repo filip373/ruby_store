@@ -15,12 +15,12 @@ RSpec.describe 'GET /offer', type: :request do
 
   context 'when offer is empty' do
     before(:all) do
-      get '/add/50'
-      get '/add/51'
+      post '/add/50'
+      post '/add/51'
     end
     after(:all) do
-      get '/remove/50'
-      get '/remove/51'
+      post '/remove/50'
+      post '/remove/51'
     end
     before { get '/offer' }
     it 'returns ok http code' do

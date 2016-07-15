@@ -49,14 +49,14 @@ class App < Sinatra::Base
                           total_with_vat: @product_service.total_with_vat(products)}
   end
 
-  get '/add/:id' do
+  post '/add/:id' do
     id = params[:id].to_i
     halt 404 unless @store_service.can_add?(id)
     @store_service.add_to_basket(id)
     redirect '/basket'
   end
 
-  get '/remove/:id' do
+  post '/remove/:id' do
     id = params[:id].to_i
     halt 404 unless @store_service.can_remove?(id)
     @store_service.remove_from_basket(id)

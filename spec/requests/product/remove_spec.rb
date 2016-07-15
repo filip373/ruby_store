@@ -1,10 +1,10 @@
 require 'web_helper'
 
-RSpec.describe 'GET /remove/:id', type: :request do
+RSpec.describe 'POST /remove/:id', type: :request do
   context 'when product is in basket' do
      before do
-       get '/add/50'
-       get '/remove/50'
+       post '/add/50'
+       post '/remove/50'
      end
      it 'returns redirect http status' do
        expect(last_response).to be_redirect
@@ -17,14 +17,14 @@ RSpec.describe 'GET /remove/:id', type: :request do
   end
 
   context 'when product is not in basket' do
-    before { get '/remove/52' }
+    before { post '/remove/52' }
     it 'returns 404 http code' do
       expect(last_response.status).to be(404)
     end
   end
 
   context 'when product of given id does not exist' do
-    before { get '/remove/552' }
+    before { post '/remove/552' }
     it 'returns 404 http code' do
       expect(last_response.status).to be(404)
     end
