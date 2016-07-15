@@ -1,25 +1,39 @@
+require_relative '../models/multiple_product'
+
 class ProductsService
-  def initialize(products)
-    @products = products
+
+  def initialize(multiple_products)
+    @multiple_products = multiple_products
   end
 
-  def fetch(product_id)
-    @products.find { |product| product.id == product_id }
+  def add(product_id)
+    multiple_product = find_by_id(product_id)
+    @multiple_products.where(product_id: product_id)
+      .update(quantity: multiple_product[:quantity] + 1)
+  end
+
+  def remove(product_id)
+    unless contains?(product_id) then
+      raise "Cannot remove product of id: #{product_id}, not in products"
+    end
+    multiple_product = find_by_id(product_id)
+    @multiple_products.where(product_id: product_id)
+      .update(quantity: multiple_product[:quantity] - 1)
   end
 
   def contains?(product_id)
-    @products.any? { |product| product.id == product_id }
+    product = find_by_id(product_id)
+    !product.nil? && product[:quantity] > 0
   end
 
-  def total(products_quantities)
-    products_quantities.reduce(0) do |sum, (product, quantity)|
-      sum += product.price * quantity
+  def products
+    @multiple_products.where { quantity > 0 }.map do |product|
+      MultipleProduct.new(product)
     end
   end
 
-  def total_with_vat(products_quantities)
-    products_quantities.reduce(0) do |sum, (product, quantity)|
-      sum += product.price_with_vat * quantity
-    end
+  private
+  def find_by_id(id)
+    @multiple_products[product_id: id]
   end
 end
