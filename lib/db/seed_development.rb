@@ -11,8 +11,4 @@ DB[:warehouse_products].insert(product_id: products[0][:id], quantity: 3)
 DB[:warehouse_products].insert(product_id: products[1][:id], quantity: 4)
 DB[:warehouse_products].insert(product_id: products[2][:id], quantity: 2)
 
-DB[:basket_products].insert(product_id: products[0][:id], quantity: 0)
-DB[:basket_products].insert(product_id: products[1][:id], quantity: 0)
-DB[:basket_products].insert(product_id: products[2][:id], quantity: 0)
-
 puts 'Database seeded'

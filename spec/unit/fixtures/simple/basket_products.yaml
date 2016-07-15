@@ -6,11 +6,3 @@ schema:
     type: integer
   - name: quantity
     type: integer
-
-data:
-  - id: 1
-    product_id: 1
-    quantity: 0
-  - id: 2
-    product_id: 2
-    quantity: 0

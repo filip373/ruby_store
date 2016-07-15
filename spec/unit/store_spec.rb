@@ -3,7 +3,8 @@ require 'sequel-fixture'
 require_relative '../../lib/models/product'
 require_relative '../../lib/models/multiple_product'
 require_relative '../../lib/services/store_service'
-require_relative '../../lib/services/products_service'
+require_relative '../../lib/services/warehouse_service'
+require_relative '../../lib/services/basket_service'
 
 RSpec.describe StoreService do
 
@@ -15,8 +16,8 @@ RSpec.describe StoreService do
   let(:fixtures) { Sequel::Fixture.new :simple, database }
 
   after(:each) { fixtures.rollback }
-  let(:warehouse_service) { ProductsService.new(database[:warehouse_products]) }
-  let(:basket_service) { ProductsService.new(database[:basket_products]) }
+  let(:warehouse_service) { WarehouseService.new(database[:warehouse_products]) }
+  let(:basket_service) { BasketService.new(database[:basket_products]) }
 
   subject do
     fixtures

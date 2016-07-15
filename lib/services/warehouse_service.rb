@@ -1,6 +1,6 @@
 require_relative '../models/multiple_product'
 
-class ProductsService
+class WarehouseService
 
   def initialize(multiple_products)
     @multiple_products = multiple_products

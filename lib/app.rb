@@ -4,7 +4,8 @@ require 'dotenv'
 require_relative './db/database'
 require_relative './services/store_service'
 require_relative './services/product_service'
-require_relative './services/products_service'
+require_relative './services/basket_service'
+require_relative './services/warehouse_service'
 
 class App < Sinatra::Base
   def initialize(app = nil)
@@ -15,8 +16,8 @@ class App < Sinatra::Base
     )
     database = Database.new.connection
     @product_service = ProductService.new(database[:products])
-    @warehouse_service = ProductsService.new(database[:warehouse_products])
-    @basket_service = ProductsService.new(database[:basket_products])
+    @warehouse_service = WarehouseService.new(database[:warehouse_products])
+    @basket_service = BasketService.new(database[:basket_products])
     @store_service = StoreService.new(
       basket_service: @basket_service,
       warehouse_service: @warehouse_service
