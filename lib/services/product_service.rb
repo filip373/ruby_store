@@ -1,14 +1,16 @@
-class ProductsService
+require_relative '../models/product'
+
+class ProductService
   def initialize(products)
     @products = products
   end
 
   def fetch(product_id)
-    @products.find { |product| product.id == product_id }
+    Product.new(@products[id: product_id])
   end
 
   def contains?(product_id)
-    @products.any? { |product| product.id == product_id }
+    !@products[id: product_id].nil?
   end
 
   def total(products_quantities)

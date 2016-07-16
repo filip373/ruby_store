@@ -9,10 +9,11 @@
         <a href="/product/<%= product.id %>">
           <%= product.name %>
         </a>
-        <a class="add-link" href="/add/<%= product.id %>">
-          <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-          Remove
-        </a>
+        <form action="/remove/<%= product.id %>" method="post" class="floating-form">
+          <button type="submit" class="form-button">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>Remove
+          </button>
+        </form>
         <span class="label label-default product-price">
           $<%= (quantity * product.price_with_vat).to_s.insert(-3, '.') %></span>
       </li>

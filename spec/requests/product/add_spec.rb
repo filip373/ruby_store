@@ -1,9 +1,9 @@
 require 'web_helper'
 
-RSpec.describe 'GET /add/:id', type: :request do
+RSpec.describe 'POST /add/:id', type: :request do
   context 'when product is in offer' do
-     before { get '/add/50' }
-     after { get '/remove/50' }
+     before { post '/add/50' }
+     after { post '/remove/50' }
      it 'returns redirect http status' do
        expect(last_response).to be_redirect
      end
@@ -15,14 +15,14 @@ RSpec.describe 'GET /add/:id', type: :request do
   end
 
   context 'when product is not in offer' do
-    before { get '/add/52' }
+    before { get '/post/52' }
     it 'returns 404 http code' do
       expect(last_response.status).to be(404)
     end
   end
 
   context 'when product of given id does not exist' do
-    before { get '/add/552' }
+    before { get '/post/552' }
     it 'returns 404 http code' do
       expect(last_response.status).to be(404)
     end

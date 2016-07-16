@@ -1,30 +1,39 @@
+require_relative '../models/multiple_product'
+
 class WarehouseService
 
-  def initialize(warehouse_products)
-    @products = warehouse_products
+  def initialize(multiple_products)
+    @multiple_products = multiple_products
   end
 
   def add(product_id)
-    find_by_id(product_id).increase
+    multiple_product = find_by_id(product_id)
+    @multiple_products.where(product_id: product_id)
+      .update(quantity: multiple_product[:quantity] + 1)
   end
 
   def remove(product_id)
     unless contains?(product_id) then
-      raise "Cannot remove product of id: #{product_id}, not in warehouse"
+      raise "Cannot remove product of id: #{product_id}, not in products"
     end
-    find_by_id(product_id).decrease
+    multiple_product = find_by_id(product_id)
+    @multiple_products.where(product_id: product_id)
+      .update(quantity: multiple_product[:quantity] - 1)
   end
 
   def contains?(product_id)
-    @products.any? { |p| p.product_id == product_id && p.quantity > 0 }
+    product = find_by_id(product_id)
+    !product.nil? && product[:quantity] > 0
   end
 
   def products
-    @products.select { |p| p.quantity > 0 }
+    @multiple_products.where { quantity > 0 }.map do |product|
+      MultipleProduct.new(product)
+    end
   end
 
   private
-    def find_by_id(product_id)
-      @products.find { |p| p.product_id == product_id }
-    end
+  def find_by_id(id)
+    @multiple_products[product_id: id]
+  end
 end

@@ -11,8 +11,8 @@ RSpec.describe 'GET /basket', type: :request do
     end
   end
   context 'when basket is not empty' do
-    before(:all) { get '/add/50' }
-    after(:all) { get '/remove/50' }
+    before(:all) { post '/add/50' }
+    after(:all) { post '/remove/50' }
     before do
       get '/basket'
     end

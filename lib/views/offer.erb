@@ -8,10 +8,11 @@
         <a href="/product/<%= product.id %>">
           <%= product.name %>
         </a>
-        <a class="add-link" href="/add/<%= product.id %>">
-          <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-          Add to basket
-        </a>
+        <form action="/add/<%= product.id %>" method="post" class="floating-form">
+          <button type="submit" class="form-button">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Add to basket
+          </button>
+        </form>
         <span class="badge"><%= quantity %> left</span>
       </li>
     <% end %>

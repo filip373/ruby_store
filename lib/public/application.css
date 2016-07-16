@@ -13,3 +13,16 @@
 .product-price {
   float: right;
 }
+
+.floating-form {
+  float: right;
+  padding: 0 10px;
+}
+
+.form-button {
+  background:none!important;
+  border:none;
+  padding:0!important;
+  font: inherit;
+  cursor: pointer;
+}

@@ -6,7 +6,7 @@ RSpec.describe 'GET /product/:id', type: :request do
     it 'returns OK HTTP code' do
       expect(last_response).to be_ok
     end
-    it 'returns valid HTTP content typ' do
+    it 'returns valid HTTP content type' do
       expect(last_response.headers['Content-Type']).to include('text/html')
     end
     it 'contains valid product name' do

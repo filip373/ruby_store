@@ -1,0 +1,24 @@
+schema:
+  - name: id
+    type: integer
+    primary_key: true
+  - name: name
+    type: string
+  - name: price
+    type: integer
+  - name: vat
+    type: integer
+
+data:
+  - id: 1
+    name: Ball
+    price: 2355
+    vat: 210
+  - id: 2
+    name: Book
+    price: 934
+    vat: 9.5
+  - id: 3
+    name: Chair
+    price: 1255
+    vat: 2100

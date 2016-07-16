@@ -1,0 +1,16 @@
+schema:
+  - name: id
+    type: integer
+    primary_key: true
+  - name: product_id
+    type: integer
+  - name: quantity
+    type: integer
+
+data:
+  - id: 1
+    product_id: 1
+    quantity: 2
+  - id: 2
+    product_id: 2
+    quantity: 0
