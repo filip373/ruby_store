@@ -45,9 +45,11 @@ class App < Sinatra::Base
       [@product_service.fetch(basket_product.product_id),
        basket_product.quantity]
     end
-    erb :basket, locals: {title: 'Basket', products: products,
-                          total: @product_service.total(products),
-                          total_with_vat: @product_service.total_with_vat(products)}
+    erb :basket, locals: {
+      title: 'Basket', products: products,
+      total: @product_service.total(products),
+      total_with_vat: @product_service.total_with_vat(products)
+    }
   end
 
   post '/add/:id' do
